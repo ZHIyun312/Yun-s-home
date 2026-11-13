@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重庆科技大学</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --red: #B01E2E;
+    --red-dark: #8C1623;
+    --ink: #1a1a1a;
+    --grey: #666;
+    --line: #e6e6e6;
+    --bg-soft: #f7f8fa;
+  }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: #fff;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: 1200px; max-width: calc(100% - 40px); margin: 0 auto; }
+
+  /* ---------- 顶部工具条 ---------- */
+  .topbar {
+    background: #4a4f55;
+    color: #d7dadd;
+    font-size: 13px;
+    height: 34px;
+    line-height: 34px;
+  }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .topbar-links a { padding: 0 12px; border-right: 1px solid rgba(255,255,255,.15); }
+  .topbar-links a:last-child { border-right: none; }
+  .topbar-links a:hover { color: #fff; }
+  .topbar-right { display: flex; gap: 16px; }
+  .topbar-right a:hover { color: #fff; }
+
+  /* ---------- 头部 ---------- */
+  .header { background: #fff; padding: 18px 0 0; border-bottom: 1px solid var(--line); }
+  .header-main { display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo img { height: 62px; width: auto; display: block; }
+  .logo-text { line-height: 1.25; }
+  .logo-text .cn {
+    font-size: 30px; font-weight: 700; letter-spacing: 3px;
+    color: var(--red); font-family: "KaiTi", "STKaiti", serif;
+  }
+  .logo-text .en {
+    font-size: 11px; color: #8a8f94; letter-spacing: .4px; margin-top: 3px;
+  }
+  .search-box {
+    display: flex; align-items: center;
+    border: 1px solid var(--line); border-radius: 20px;
+    height: 38px; width: 240px; padding: 0 6px 0 16px;
+    background: var(--bg-soft);
+  }
+  .search-box input {
+    border: none; background: transparent; outline: none;
+    flex: 1; font-size: 13px; color: var(--ink);
+  }
+  .search-box button {
+    border: none; background: var(--red); color: #fff;
+    width: 28px; height: 28px; border-radius: 50%;
+    cursor: pointer; font-size: 13px;
+  }
+
+  /* ---------- 主导航 ---------- */
+  .nav { background: var(--red); margin-top: 16px; }
+  .nav .wrap { display: flex; }
+  .nav a {
+    flex: 1; text-align: center; color: #fff;
+    font-size: 16px; height: 52px; line-height: 52px;
+    letter-spacing: 1px; transition: background .2s;
+  }
+  .nav a:hover { background: var(--red-dark); }
+  .nav a.active { background: var(--red-dark); }
+
+  /* ---------- 轮播 ---------- */
+  .hero { position: relative; height: 460px; overflow: hidden; background: #ddd; }
+  .hero .slides { position: absolute; inset: 0; }
+  .hero .slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity .9s ease-in-out;
+  }
+  .hero .slide.on { opacity: 1; }
+  .hero .mask {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.42) 100%);
+  }
+  .hero .caption {
+    position: absolute; left: 0; right: 0; bottom: 46px;
+    color: #fff; text-align: center;
+  }
+  .hero .caption h2 {
+    font-size: 34px; font-weight: 600; letter-spacing: 3px;
+    text-shadow: 0 2px 12px rgba(0,0,0,.5);
+  }
+  .hero .caption p {
+    font-size: 15px; margin-top: 8px; opacity: .92;
+    text-shadow: 0 1px 8px rgba(0,0,0,.5);
+  }
+  .hero .dots {
+    position: absolute; bottom: 20px; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 10px;
+  }
+  .hero .dots i {
+    width: 26px; height: 4px; background: rgba(255,255,255,.45);
+    cursor: pointer; transition: background .25s;
+  }
+  .hero .dots i.on { background: #fff; }
+
+  /* ---------- 快捷入口 ---------- */
+  .quick { background: var(--bg-soft); border-bottom: 1px solid var(--line); }
+  .quick .wrap { display: flex; padding: 26px 0; }
+  .quick a {
+    flex: 1; text-align: center; padding: 6px 0;
+    transition: transform .2s;
+  }
+  .quick a:hover { transform: translateY(-3px); }
+  .quick .icon {
+    width: 52px; height: 52px; margin: 0 auto 8px;
+    border-radius: 12px; background: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 22px;
+  }
+  .quick .label { font-size: 14px; color: #333; }
+
+  /* ---------- 内容区 ---------- */
+  .main { padding: 48px 0 60px; }
+  .main .wrap { display: grid; grid-template-columns: 1fr 380px; gap: 48px; }
+
+  .sec-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--red); padding-bottom: 10px; margin-bottom: 20px;
+  }
+  .sec-head h3 { font-size: 22px; font-weight: 600; letter-spacing: 1px; }
+  .sec-head h3 span { font-size: 13px; color: #999; font-weight: 400; margin-left: 10px; letter-spacing: 0; }
+  .sec-head .more { font-size: 13px; color: #999; }
+  .sec-head .more:hover { color: var(--red); }
+
+  /* 头条 */
+  .headline { display: flex; gap: 24px; padding-bottom: 22px; border-bottom: 1px dashed var(--line); margin-bottom: 20px; }
+  .headline .thumb {
+    width: 300px; height: 180px; flex-shrink: 0;
+    background-size: cover; background-position: center;
+    border-radius: 4px; overflow: hidden;
+  }
+  .headline .txt h4 { font-size: 20px; font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+  .headline .txt h4:hover { color: var(--red); }
+  .headline .txt p { font-size: 14px; color: var(--grey); line-height: 1.85; }
+  .headline .date { font-size: 12px; color: #aaa; margin-top: 10px; }
+
+  /* 新闻列表 */
+  .news-list li {
+    list-style: none; display: flex; align-items: baseline; gap: 10px;
+    padding: 11px 0; border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+  }
+  .news-list li .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--red); flex-shrink: 0; transform: translateY(-3px);
+  }
+  .news-list li a { flex: 1; }
+  .news-list li a:hover { color: var(--red); }
+  .news-list li .date { font-size: 13px; color: #aaa; }
+
+  /* 右侧栏 */
+  .side-card { background: var(--bg-soft); padding: 22px 22px 8px; margin-bottom: 26px; }
+  .side-card h4 {
+    font-size: 17px; font-weight: 600; margin-bottom: 14px;
+    padding-left: 10px; border-left: 4px solid var(--red);
+  }
+  .side-card ul li {
+    list-style: none; font-size: 14px; padding: 9px 0;
+    border-bottom: 1px solid #ececec; color: #444;
+  }
+  .side-card ul li:last-child { border-bottom: none; }
+  .side-card ul li:hover { color: var(--red); }
+  .side-card ul li .tag {
+    display: inline-block; font-size: 12px; color: #fff; background: var(--red);
+    padding: 0 6px; border-radius: 2px; margin-right: 8px;
+  }
+
+  /* 数据条 */
+  .stats { background: var(--red); color: #fff; }
+  .stats .wrap { display: flex; padding: 34px 0; text-align: center; }
+  .stats .item { flex: 1; border-right: 1px solid rgba(255,255,255,.22); }
+  .stats .item:last-child { border-right: none; }
+  .stats .num { font-size: 34px; font-weight: 700; line-height: 1.2; }
+  .stats .num small { font-size: 15px; font-weight: 400; margin-left: 3px; }
+  .stats .label { font-size: 14px; opacity: .88; margin-top: 6px; }
+
+  /* ---------- 底部 ---------- */
+  footer { background: #3a3f45; color: #b9bec4; font-size: 13.5px; padding: 36px 0 22px; }
+  footer .cols { display: flex; gap: 60px; padding-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  footer .col h5 { color: #fff; font-size: 15px; margin-bottom: 12px; font-weight: 600; }
+  footer .col a { display: block; padding: 4px 0; }
+  footer .col a:hover { color: #fff; }
+  footer .copy { padding-top: 18px; font-size: 12.5px; color: #8a9096; text-align: center; line-height: 1.9; }
+</style>
+</head>
+<body>
+
+<!-- 顶部工具条 -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbar-links">
+      <a href="#">学生</a>
+      <a href="#">教职工</a>
+      <a href="#">校友</a>
+      <a href="#">访客</a>
+      <a href="#">EN</a>
+      <a href="#">简化版</a>
+    </div>
+    <div class="topbar-right">
+      <a href="#">邮箱</a>
+      <a href="#">图书馆</a>
+      <a href="#">网上办事大厅</a>
+    </div>
+  </div>
+</div>
+
+<!-- 头部 -->
+<header class="header">
+  <div class="wrap">
+    <div class="header-main">
+      <div class="logo">
+        <img src="img/logo.png" alt="重庆科技大学校徽">
+        <div class="logo-text">
+          <div class="cn">重庆科技大学</div>
+          <div class="en">CHONGQING UNIVERSITY OF SCIENCE AND TECHNOLOGY</div>
+        </div>
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="搜索校园新闻、通知公告">
+        <button>⌕</button>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="wrap">
+        <a href="#" class="active">学校概况</a>
+        <a href="#">教育教学</a>
+        <a href="#">学科科研</a>
+        <a href="#">招生就业</a>
+        <a href="#">开放合作</a>
+        <a href="#">人才招聘</a>
+        <a href="#">大学文化</a>
+        <a href="#">校友工作</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- 轮播 -->
+<section class="hero">
+  <div class="slides">
+    <div class="slide on" style="background-image:url('img/2026lidong.jpg')"></div>
+    <div class="slide" style="background-image:url('img/90.jpg')"></div>
+    <div class="slide" style="background-image:url('img/2026qiujikaixue.jpg')"></div>
+  </div>
+  <div class="mask"></div>
+  <div class="caption" id="heroCaption">
+    <h2>立冬 · 重科校园</h2>
+    <p>厚德 · 博学 · 砺志 · 笃行</p>
+  </div>
+  <div class="dots">
+    <i class="on" data-i="0"></i>
+    <i data-i="1"></i>
+    <i data-i="2"></i>
+  </div>
+</section>
+
+<!-- 快捷入口 -->
+<section class="quick">
+  <div class="wrap">
+    <a href="#"><div class="icon">◈</div><div class="label">本科招生</div></a>
+    <a href="#"><div class="icon">◎</div><div class="label">研究生招生</div></a>
+    <a href="#"><div class="icon">▤</div><div class="label">教务系统</div></a>
+    <a href="#"><div class="icon">◐</div><div class="label">网络服务</div></a>
+    <a href="#"><div class="icon">◧</div><div class="label">图书馆</div></a>
+    <a href="#"><div class="icon">▣</div><div class="label">校园邮箱</div></a>
+    <a href="#"><div class="icon">◉</div><div class="label">一卡通</div></a>
+  </div>
+</section>
+
+<!-- 主体内容 -->
+<main class="main">
+  <div class="wrap">
+
+    <!-- 左侧：要闻 -->
+    <div>
+      <div class="sec-head">
+        <h3>重科要闻<span>NEWS</span></h3>
+        <a href="#" class="more">更多 ›</a>
+      </div>
+
+      <article class="headline">
+        <div class="thumb" style="background-image:url('img/2026qiujikaixue.jpg')"></div>
+        <div class="txt">
+          <h4>新学期 新气象：学校迎来 2026 级新同学</h4>
+          <p>九月，重科校园迎来新一级学子。报到、入住、开学第一课，一张张新面孔在校园里写下属于自己的第一行注脚。</p>
+          <div class="date">2026-09-01</div>
+        </div>
+      </article>
+
+      <ul class="news-list">
+        <li><span class="dot"></span><a href="#">学校召开 2026 年秋季学期工作会议，部署年度重点任务</a><span class="date">10-28</span></li>
+        <li><span class="dot"></span><a href="#">我校学子在第十八届全国大学生数学竞赛中获佳绩</a><span class="date">10-25</span></li>
+        <li><span class="dot"></span><a href="#">能源与环境工程学院举行校企联合实验室揭牌仪式</a><span class="date">10-21</span></li>
+        <li><span class="dot"></span><a href="#">学校举行 2027 届毕业生就业工作推进会</a><span class="date">10-18</span></li>
+        <li><span class="dot"></span><a href="#">重庆科技大学第九届校园文化艺术节开幕</a><span class="date">10-15</span></li>
+        <li><span class="dot"></span><a href="#">学校新增 3 个省级一流本科专业建设点</a><span class="date">10-10</span></li>
+      </ul>
+    </div>
+
+    <!-- 右侧：通知公告 -->
+    <aside>
+      <div class="side-card">
+        <h4>通知公告</h4>
+        <ul>
+          <li><span class="tag">教务</span>关于 2026-2027 学年第一学期期末考试安排的通知</li>
+          <li><span class="tag">学工</span>2026 年国家奖学金、国家励志奖学金评审结果公示</li>
+          <li><span class="tag">科研</span>关于组织申报 2027 年度重庆市自然科学基金项目的通知</li>
+          <li><span class="tag">后勤</span>关于校园部分道路临时封闭施工的通告</li>
+          <li><span class="tag">就业</span>2027 届毕业生秋季校园招聘会（第二场）公告</li>
+        </ul>
+      </div>
+
+      <div class="side-card">
+        <h4>学术讲座</h4>
+        <ul>
+          <li>· 智能感知与先进制造技术前沿</li>
+          <li>· 页岩气开发中的多相流问题</li>
+          <li>· 从校园到职场：工程师的成长路径</li>
+          <li>· 双碳目标下的能源转型</li>
+        </ul>
+      </div>
+
+      <div class="side-card">
+        <h4>专题链接</h4>
+        <ul>
+          <li>· 学习贯彻党的二十届四中全会精神</li>
+          <li>· 重庆科技大学 90 周年校庆专题</li>
+          <li>· 本科教育教学审核评估</li>
+          <li>· 招生信息网</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- 数据条 -->
+<section class="stats">
+  <div class="wrap">
+    <div class="item"><div class="num">1951<small>年</small></div><div class="label">建校年份</div></div>
+    <div class="item"><div class="num">2.3<small>万</small></div><div class="label">全日制在校生</div></div>
+    <div class="item"><div class="num">1500<small>+</small></div><div class="label">专任教师</div></div>
+    <div class="item"><div class="num">80<small>+</small></div><div class="label">本科专业</div></div>
+  </div>
+</section>
+
+<!-- 底部 -->
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div class="col">
+        <h5>学校概况</h5>
+        <a href="#">学校简介</a>
+        <a href="#">历史沿革</a>
+        <a href="#">治理架构</a>
+        <a href="#">组织机构</a>
+      </div>
+      <div class="col">
+        <h5>教育教学</h5>
+        <a href="#">师资队伍</a>
+        <a href="#">本科生</a>
+        <a href="#">研究生</a>
+        <a href="#">继续教育</a>
+      </div>
+      <div class="col">
+        <h5>学科科研</h5>
+        <a href="#">学科建设</a>
+        <a href="#">科学研究</a>
+        <a href="#">学术期刊</a>
+      </div>
+      <div class="col">
+        <h5>开放合作</h5>
+        <a href="#">国内交流合作</a>
+        <a href="#">国际交流合作</a>
+        <a href="#">人才招聘</a>
+      </div>
+      <div class="col">
+        <h5>大学文化</h5>
+        <a href="#">办学理念</a>
+        <a href="#">形象标识</a>
+        <a href="#">校园风光</a>
+      </div>
+    </div>
+    <div class="copy">
+      地址：重庆市沙坪坝区大学城东路 20 号　邮编：401331<br>
+      © 重庆科技大学　渝ICP备13000511号-1
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 轮播
+  (function () {
+    const slides = document.querySelectorAll('.hero .slide');
+    const dots = document.querySelectorAll('.hero .dots i');
+    const captions = [
+      ['立冬 · 重科校园', '厚德 · 博学 · 砺志 · 笃行'],
+      ['90 周年校庆', '九秩重科，薪火相传'],
+      ['2026 秋季开学', '新学期 · 新同学 · 新起点']
+    ];
+    const capEl = document.getElementById('heroCaption');
+    let idx = 0;
+
+    function go(i) {
+      idx = i;
+      slides.forEach((s, k) => s.classList.toggle('on', k === i));
+      dots.forEach((d, k) => d.classList.toggle('on', k === i));
+      capEl.innerHTML = '<h2>' + captions[i][0] + '</h2><p>' + captions[i][1] + '</p>';
+    }
+
+    dots.forEach(d => d.addEventListener('click', () => go(+d.dataset.i)));
+    setInterval(() => go((idx + 1) % slides.length), 5000);
+  })();
+</script>
+</body>
+</html>
