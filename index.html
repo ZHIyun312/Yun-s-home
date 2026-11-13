@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>重庆科技大学</title>
+<title>C市科技大学</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --red: #B01E2E;
-    --red-dark: #8C1623;
+    --red: #1E5AA8;
+    --red-dark: #164078;
     --ink: #1a1a1a;
     --grey: #666;
     --line: #e6e6e6;
-    --bg-soft: #f7f8fa;
+    --bg-soft: #f6f8fb;
   }
   body {
     font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
@@ -25,13 +25,7 @@
   .wrap { width: 1200px; max-width: calc(100% - 40px); margin: 0 auto; }
 
   /* ---------- 顶部工具条 ---------- */
-  .topbar {
-    background: #4a4f55;
-    color: #d7dadd;
-    font-size: 13px;
-    height: 34px;
-    line-height: 34px;
-  }
+  .topbar { background: #4a4f55; color: #d7dadd; font-size: 13px; height: 34px; line-height: 34px; }
   .topbar .wrap { display: flex; justify-content: space-between; align-items: center; }
   .topbar-links a { padding: 0 12px; border-right: 1px solid rgba(255,255,255,.15); }
   .topbar-links a:last-child { border-right: none; }
@@ -43,150 +37,89 @@
   .header { background: #fff; padding: 18px 0 0; border-bottom: 1px solid var(--line); }
   .header-main { display: flex; align-items: center; justify-content: space-between; }
   .logo { display: flex; align-items: center; gap: 14px; }
-  .logo img { height: 62px; width: auto; display: block; }
+  .logo svg { height: 62px; width: 62px; display: block; }
   .logo-text { line-height: 1.25; }
-  .logo-text .cn {
-    font-size: 30px; font-weight: 700; letter-spacing: 3px;
-    color: var(--red); font-family: "KaiTi", "STKaiti", serif;
-  }
-  .logo-text .en {
-    font-size: 11px; color: #8a8f94; letter-spacing: .4px; margin-top: 3px;
-  }
+  .logo-text .cn { font-size: 30px; font-weight: 700; letter-spacing: 3px; color: var(--red); font-family: "KaiTi", "STKaiti", serif; }
+  .logo-text .en { font-size: 10.5px; color: #8a8f94; letter-spacing: .5px; margin-top: 3px; }
   .search-box {
-    display: flex; align-items: center;
-    border: 1px solid var(--line); border-radius: 20px;
-    height: 38px; width: 240px; padding: 0 6px 0 16px;
-    background: var(--bg-soft);
+    display: flex; align-items: center; border: 1px solid var(--line); border-radius: 20px;
+    height: 38px; width: 240px; padding: 0 6px 0 16px; background: var(--bg-soft);
   }
-  .search-box input {
-    border: none; background: transparent; outline: none;
-    flex: 1; font-size: 13px; color: var(--ink);
-  }
-  .search-box button {
-    border: none; background: var(--red); color: #fff;
-    width: 28px; height: 28px; border-radius: 50%;
-    cursor: pointer; font-size: 13px;
-  }
+  .search-box input { border: none; background: transparent; outline: none; flex: 1; font-size: 13px; color: var(--ink); }
+  .search-box button { border: none; background: var(--red); color: #fff; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 13px; }
 
   /* ---------- 主导航 ---------- */
   .nav { background: var(--red); margin-top: 16px; }
   .nav .wrap { display: flex; }
-  .nav a {
-    flex: 1; text-align: center; color: #fff;
-    font-size: 16px; height: 52px; line-height: 52px;
-    letter-spacing: 1px; transition: background .2s;
-  }
+  .nav a { flex: 1; text-align: center; color: #fff; font-size: 16px; height: 52px; line-height: 52px; letter-spacing: 1px; transition: background .2s; }
   .nav a:hover { background: var(--red-dark); }
   .nav a.active { background: var(--red-dark); }
 
-  /* ---------- 轮播 ---------- */
-  .hero { position: relative; height: 460px; overflow: hidden; background: #ddd; }
+  /* ---------- 轮播（纯 CSS 渐变，无图片） ---------- */
+  .hero { position: relative; height: 460px; overflow: hidden; background: #123a6b; }
   .hero .slides { position: absolute; inset: 0; }
-  .hero .slide {
-    position: absolute; inset: 0;
-    background-size: cover; background-position: center;
-    opacity: 0; transition: opacity .9s ease-in-out;
-  }
+  .hero .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease-in-out; }
   .hero .slide.on { opacity: 1; }
-  .hero .mask {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.42) 100%);
+  .hero .slide.s1 { background: linear-gradient(120deg, #0d2a52 0%, #1E5AA8 45%, #4a90d9 100%); }
+  .hero .slide.s2 { background: linear-gradient(120deg, #123b2e 0%, #1f6b52 50%, #4aa87c 100%); }
+  .hero .slide.s3 { background: linear-gradient(120deg, #4a2b1e 0%, #92502f 50%, #d08a52 100%); }
+  .hero .slide::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 78% 28%, rgba(255,255,255,.18) 0 3px, transparent 4px),
+      radial-gradient(circle at 20% 68%, rgba(255,255,255,.13) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 82%, rgba(255,255,255,.10) 0 2px, transparent 3px);
   }
-  .hero .caption {
-    position: absolute; left: 0; right: 0; bottom: 46px;
-    color: #fff; text-align: center;
-  }
-  .hero .caption h2 {
-    font-size: 34px; font-weight: 600; letter-spacing: 3px;
-    text-shadow: 0 2px 12px rgba(0,0,0,.5);
-  }
-  .hero .caption p {
-    font-size: 15px; margin-top: 8px; opacity: .92;
-    text-shadow: 0 1px 8px rgba(0,0,0,.5);
-  }
-  .hero .dots {
-    position: absolute; bottom: 20px; left: 0; right: 0;
-    display: flex; justify-content: center; gap: 10px;
-  }
-  .hero .dots i {
-    width: 26px; height: 4px; background: rgba(255,255,255,.45);
-    cursor: pointer; transition: background .25s;
-  }
+  .hero .mask { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.45) 100%); }
+  .hero .caption { position: absolute; left: 0; right: 0; bottom: 46px; color: #fff; text-align: center; padding: 0 20px; }
+  .hero .caption h2 { font-size: 34px; font-weight: 600; letter-spacing: 3px; text-shadow: 0 2px 12px rgba(0,0,0,.45); }
+  .hero .caption p { font-size: 15px; margin-top: 8px; opacity: .92; text-shadow: 0 1px 8px rgba(0,0,0,.45); }
+  .hero .dots { position: absolute; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; gap: 10px; }
+  .hero .dots i { width: 26px; height: 4px; background: rgba(255,255,255,.45); cursor: pointer; transition: background .25s; }
   .hero .dots i.on { background: #fff; }
 
   /* ---------- 快捷入口 ---------- */
   .quick { background: var(--bg-soft); border-bottom: 1px solid var(--line); }
   .quick .wrap { display: flex; padding: 26px 0; }
-  .quick a {
-    flex: 1; text-align: center; padding: 6px 0;
-    transition: transform .2s;
-  }
+  .quick a { flex: 1; text-align: center; padding: 6px 0; transition: transform .2s; }
   .quick a:hover { transform: translateY(-3px); }
-  .quick .icon {
-    width: 52px; height: 52px; margin: 0 auto 8px;
-    border-radius: 12px; background: var(--red);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 22px;
-  }
+  .quick .icon { width: 52px; height: 52px; margin: 0 auto 8px; border-radius: 12px; background: var(--red); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 21px; }
   .quick .label { font-size: 14px; color: #333; }
 
   /* ---------- 内容区 ---------- */
   .main { padding: 48px 0 60px; }
   .main .wrap { display: grid; grid-template-columns: 1fr 380px; gap: 48px; }
-
-  .sec-head {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    border-bottom: 2px solid var(--red); padding-bottom: 10px; margin-bottom: 20px;
-  }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid var(--red); padding-bottom: 10px; margin-bottom: 20px; }
   .sec-head h3 { font-size: 22px; font-weight: 600; letter-spacing: 1px; }
   .sec-head h3 span { font-size: 13px; color: #999; font-weight: 400; margin-left: 10px; letter-spacing: 0; }
   .sec-head .more { font-size: 13px; color: #999; }
   .sec-head .more:hover { color: var(--red); }
 
-  /* 头条 */
   .headline { display: flex; gap: 24px; padding-bottom: 22px; border-bottom: 1px dashed var(--line); margin-bottom: 20px; }
   .headline .thumb {
-    width: 300px; height: 180px; flex-shrink: 0;
-    background-size: cover; background-position: center;
-    border-radius: 4px; overflow: hidden;
+    width: 300px; height: 180px; flex-shrink: 0; border-radius: 4px; overflow: hidden;
+    background: linear-gradient(135deg, #0d2a52 0%, #1E5AA8 60%, #6aa9e9 100%);
+    display: flex; align-items: center; justify-content: center;
   }
+  .headline .thumb span { color: rgba(255,255,255,.9); font-size: 15px; letter-spacing: 2px; }
   .headline .txt h4 { font-size: 20px; font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
   .headline .txt h4:hover { color: var(--red); }
   .headline .txt p { font-size: 14px; color: var(--grey); line-height: 1.85; }
   .headline .date { font-size: 12px; color: #aaa; margin-top: 10px; }
 
-  /* 新闻列表 */
-  .news-list li {
-    list-style: none; display: flex; align-items: baseline; gap: 10px;
-    padding: 11px 0; border-bottom: 1px solid #f0f0f0;
-    font-size: 15px;
-  }
-  .news-list li .dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--red); flex-shrink: 0; transform: translateY(-3px);
-  }
+  .news-list li { list-style: none; display: flex; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
+  .news-list li .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--red); flex-shrink: 0; transform: translateY(-3px); }
   .news-list li a { flex: 1; }
   .news-list li a:hover { color: var(--red); }
   .news-list li .date { font-size: 13px; color: #aaa; }
 
-  /* 右侧栏 */
   .side-card { background: var(--bg-soft); padding: 22px 22px 8px; margin-bottom: 26px; }
-  .side-card h4 {
-    font-size: 17px; font-weight: 600; margin-bottom: 14px;
-    padding-left: 10px; border-left: 4px solid var(--red);
-  }
-  .side-card ul li {
-    list-style: none; font-size: 14px; padding: 9px 0;
-    border-bottom: 1px solid #ececec; color: #444;
-  }
+  .side-card h4 { font-size: 17px; font-weight: 600; margin-bottom: 14px; padding-left: 10px; border-left: 4px solid var(--red); }
+  .side-card ul li { list-style: none; font-size: 14px; padding: 9px 0; border-bottom: 1px solid #ececec; color: #444; }
   .side-card ul li:last-child { border-bottom: none; }
   .side-card ul li:hover { color: var(--red); }
-  .side-card ul li .tag {
-    display: inline-block; font-size: 12px; color: #fff; background: var(--red);
-    padding: 0 6px; border-radius: 2px; margin-right: 8px;
-  }
+  .side-card ul li .tag { display: inline-block; font-size: 12px; color: #fff; background: var(--red); padding: 0 6px; border-radius: 2px; margin-right: 8px; }
 
-  /* 数据条 */
   .stats { background: var(--red); color: #fff; }
   .stats .wrap { display: flex; padding: 34px 0; text-align: center; }
   .stats .item { flex: 1; border-right: 1px solid rgba(255,255,255,.22); }
@@ -207,72 +140,52 @@
   @media (max-width: 768px) {
     body { font-size: 14px; }
     .wrap { width: auto; max-width: none; padding: 0 16px; }
-
-    /* 顶部工具条：只留主要入口，横向可滚 */
     .topbar { height: 30px; line-height: 30px; font-size: 12px; }
-    .topbar .wrap { display: flex; justify-content: flex-start; overflow-x: auto; gap: 0; }
+    .topbar .wrap { display: flex; justify-content: flex-start; overflow-x: auto; }
     .topbar-links { display: flex; white-space: nowrap; }
     .topbar-links a { padding: 0 9px; border-right: none; }
     .topbar-right { display: none; }
-
-    /* 头部：竖排 */
     .header { padding: 14px 0 0; }
     .header-main { flex-direction: column; align-items: flex-start; gap: 12px; }
     .logo { gap: 10px; }
-    .logo img { height: 42px; }
+    .logo svg { height: 42px; width: 42px; }
     .logo-text .cn { font-size: 21px; letter-spacing: 2px; }
-    .logo-text .en { font-size: 7.5px; letter-spacing: 0; line-height: 1.3; }
+    .logo-text .en { font-size: 7px; letter-spacing: 0; line-height: 1.3; }
     .search-box { width: 100%; height: 36px; }
-
-    /* 导航：横向滚动，不换行 */
     .nav { margin-top: 12px; }
     .nav .wrap { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .nav .wrap::-webkit-scrollbar { display: none; }
     .nav a { flex: none; padding: 0 15px; height: 44px; line-height: 44px; font-size: 14px; letter-spacing: 0; }
-
-    /* 轮播：矮一点 */
     .hero { height: 210px; }
-    .hero .caption { bottom: 30px; padding: 0 20px; }
+    .hero .caption { bottom: 30px; }
     .hero .caption h2 { font-size: 19px; letter-spacing: 1px; }
     .hero .caption p { font-size: 12px; margin-top: 4px; }
     .hero .dots { bottom: 12px; }
     .hero .dots i { width: 18px; height: 3px; }
-
-    /* 快捷入口：4 列两行 */
     .quick .wrap { flex-wrap: wrap; padding: 14px 0 4px; }
     .quick a { flex: 0 0 25%; padding: 8px 0; }
     .quick .icon { width: 40px; height: 40px; font-size: 17px; border-radius: 9px; margin-bottom: 5px; }
     .quick .label { font-size: 12px; }
-
-    /* 主体：单列 */
     .main { padding: 26px 0 34px; }
     .main .wrap { display: block; }
     .sec-head { margin-bottom: 14px; }
     .sec-head h3 { font-size: 18px; }
     .sec-head h3 span { font-size: 11px; }
-
-    /* 头条：上下排 */
     .headline { flex-direction: column; gap: 12px; padding-bottom: 16px; margin-bottom: 14px; }
     .headline .thumb { width: 100%; height: 165px; }
     .headline .txt h4 { font-size: 16px; margin-bottom: 6px; }
     .headline .txt p { font-size: 13px; line-height: 1.7; }
-
     .news-list li { font-size: 14px; padding: 10px 0; align-items: flex-start; }
     .news-list li .date { font-size: 12px; flex-shrink: 0; }
-
     aside { margin-top: 28px; }
     .side-card { padding: 16px 16px 4px; margin-bottom: 20px; }
     .side-card h4 { font-size: 16px; margin-bottom: 10px; }
     .side-card ul li { font-size: 13.5px; padding: 8px 0; line-height: 1.6; }
-
-    /* 数据条：2×2 */
     .stats .wrap { flex-wrap: wrap; padding: 20px 0; }
     .stats .item { flex: 0 0 50%; border-right: none; padding: 12px 0; }
     .stats .num { font-size: 24px; }
     .stats .num small { font-size: 12px; }
     .stats .label { font-size: 12px; margin-top: 3px; }
-
-    /* 底部 */
     footer { padding: 24px 0 18px; }
     footer .cols { flex-wrap: wrap; gap: 20px 0; }
     footer .col { flex: 0 0 50%; }
@@ -280,8 +193,6 @@
     footer .col a { font-size: 12.5px; padding: 3px 0; }
     footer .copy { font-size: 11.5px; padding-top: 14px; }
   }
-
-  /* 超小屏（≤380px）再收一点 */
   @media (max-width: 380px) {
     .logo-text .cn { font-size: 18px; }
     .hero { height: 180px; }
@@ -300,12 +211,11 @@
       <a href="#">校友</a>
       <a href="#">访客</a>
       <a href="#">EN</a>
-      <a href="#">简化版</a>
     </div>
     <div class="topbar-right">
       <a href="#">邮箱</a>
       <a href="#">图书馆</a>
-      <a href="#">网上办事大厅</a>
+      <a href="#">办事大厅</a>
     </div>
   </div>
 </div>
@@ -315,10 +225,16 @@
   <div class="wrap">
     <div class="header-main">
       <div class="logo">
-        <img src="img/logo.png" alt="重庆科技大学校徽">
+        <!-- 自绘 SVG 校徽：圆形 + C科大 -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="#1E5AA8" stroke-width="4"/>
+          <circle cx="50" cy="50" r="36" fill="#1E5AA8"/>
+          <path d="M50 26 L56 44 L75 44 L60 55 L66 73 L50 62 L34 73 L40 55 L25 44 L44 44 Z" fill="#fff" opacity="0.95"/>
+          <path d="M22 68 Q35 60 50 68 Q65 76 78 68" fill="none" stroke="#fff" stroke-width="3" opacity="0.75"/>
+        </svg>
         <div class="logo-text">
-          <div class="cn">重庆科技大学</div>
-          <div class="en">CHONGQING UNIVERSITY OF SCIENCE AND TECHNOLOGY</div>
+          <div class="cn">C市科技大学</div>
+          <div class="en">C-CITY UNIVERSITY OF SCIENCE AND TECHNOLOGY</div>
         </div>
       </div>
       <div class="search-box">
@@ -344,14 +260,14 @@
 <!-- 轮播 -->
 <section class="hero">
   <div class="slides">
-    <div class="slide on" style="background-image:url('img/2026lidong.jpg')"></div>
-    <div class="slide" style="background-image:url('img/90.jpg')"></div>
-    <div class="slide" style="background-image:url('img/2026qiujikaixue.jpg')"></div>
+    <div class="slide s1 on"></div>
+    <div class="slide s2"></div>
+    <div class="slide s3"></div>
   </div>
   <div class="mask"></div>
   <div class="caption" id="heroCaption">
-    <h2>立冬 · 重科校园</h2>
-    <p>厚德 · 博学 · 砺志 · 笃行</p>
+    <h2>C市 · 春晖</h2>
+    <p>明德 · 求真 · 创新 · 致远</p>
   </div>
   <div class="dots">
     <i class="on" data-i="0"></i>
@@ -377,18 +293,17 @@
 <main class="main">
   <div class="wrap">
 
-    <!-- 左侧：要闻 -->
     <div>
       <div class="sec-head">
-        <h3>重科要闻<span>NEWS</span></h3>
+        <h3>C科大要闻<span>NEWS</span></h3>
         <a href="#" class="more">更多 ›</a>
       </div>
 
       <article class="headline">
-        <div class="thumb" style="background-image:url('img/2026qiujikaixue.jpg')"></div>
+        <div class="thumb"><span>新学期 · 新起点</span></div>
         <div class="txt">
           <h4>新学期 新气象：学校迎来 2026 级新同学</h4>
-          <p>九月，重科校园迎来新一级学子。报到、入住、开学第一课，一张张新面孔在校园里写下属于自己的第一行注脚。</p>
+          <p>九月，C市科大校园迎来新一级学子。报到、入住、开学第一课，一张张新面孔在校园里写下属于自己的第一行注脚。</p>
           <div class="date">2026-09-01</div>
         </div>
       </article>
@@ -396,21 +311,20 @@
       <ul class="news-list">
         <li><span class="dot"></span><a href="#">学校召开 2026 年秋季学期工作会议，部署年度重点任务</a><span class="date">10-28</span></li>
         <li><span class="dot"></span><a href="#">我校学子在第十八届全国大学生数学竞赛中获佳绩</a><span class="date">10-25</span></li>
-        <li><span class="dot"></span><a href="#">能源与环境工程学院举行校企联合实验室揭牌仪式</a><span class="date">10-21</span></li>
+        <li><span class="dot"></span><a href="#">智能制造学院举行校企联合实验室揭牌仪式</a><span class="date">10-21</span></li>
         <li><span class="dot"></span><a href="#">学校举行 2027 届毕业生就业工作推进会</a><span class="date">10-18</span></li>
-        <li><span class="dot"></span><a href="#">重庆科技大学第九届校园文化艺术节开幕</a><span class="date">10-15</span></li>
+        <li><span class="dot"></span><a href="#">C市科技大学第九届校园文化艺术节开幕</a><span class="date">10-15</span></li>
         <li><span class="dot"></span><a href="#">学校新增 3 个省级一流本科专业建设点</a><span class="date">10-10</span></li>
       </ul>
     </div>
 
-    <!-- 右侧：通知公告 -->
     <aside>
       <div class="side-card">
         <h4>通知公告</h4>
         <ul>
           <li><span class="tag">教务</span>关于 2026-2027 学年第一学期期末考试安排的通知</li>
           <li><span class="tag">学工</span>2026 年国家奖学金、国家励志奖学金评审结果公示</li>
-          <li><span class="tag">科研</span>关于组织申报 2027 年度重庆市自然科学基金项目的通知</li>
+          <li><span class="tag">科研</span>关于组织申报 2027 年度市自然科学基金项目的通知</li>
           <li><span class="tag">后勤</span>关于校园部分道路临时封闭施工的通告</li>
           <li><span class="tag">就业</span>2027 届毕业生秋季校园招聘会（第二场）公告</li>
         </ul>
@@ -420,7 +334,7 @@
         <h4>学术讲座</h4>
         <ul>
           <li>· 智能感知与先进制造技术前沿</li>
-          <li>· 页岩气开发中的多相流问题</li>
+          <li>· 新材料制备中的多尺度问题</li>
           <li>· 从校园到职场：工程师的成长路径</li>
           <li>· 双碳目标下的能源转型</li>
         </ul>
@@ -430,7 +344,7 @@
         <h4>专题链接</h4>
         <ul>
           <li>· 学习贯彻党的二十届四中全会精神</li>
-          <li>· 重庆科技大学 90 周年校庆专题</li>
+          <li>· C市科技大学 20 周年校庆专题</li>
           <li>· 本科教育教学审核评估</li>
           <li>· 招生信息网</li>
         </ul>
@@ -442,10 +356,10 @@
 <!-- 数据条 -->
 <section class="stats">
   <div class="wrap">
-    <div class="item"><div class="num">1951<small>年</small></div><div class="label">建校年份</div></div>
-    <div class="item"><div class="num">2.3<small>万</small></div><div class="label">全日制在校生</div></div>
-    <div class="item"><div class="num">1500<small>+</small></div><div class="label">专任教师</div></div>
-    <div class="item"><div class="num">80<small>+</small></div><div class="label">本科专业</div></div>
+    <div class="item"><div class="num">2004<small>年</small></div><div class="label">建校年份</div></div>
+    <div class="item"><div class="num">1.8<small>万</small></div><div class="label">全日制在校生</div></div>
+    <div class="item"><div class="num">1200<small>+</small></div><div class="label">专任教师</div></div>
+    <div class="item"><div class="num">60<small>+</small></div><div class="label">本科专业</div></div>
   </div>
 </section>
 
@@ -487,20 +401,18 @@
       </div>
     </div>
     <div class="copy">
-      地址：重庆市沙坪坝区大学城东路 20 号　邮编：401331<br>
-      © 重庆科技大学　渝ICP备13000511号-1
+      本站为前端课程作业演示页面，校名、Logo 及内容均为虚构，不涉及任何真实机构
     </div>
   </div>
 </footer>
 
 <script>
-  // 轮播
   (function () {
     const slides = document.querySelectorAll('.hero .slide');
     const dots = document.querySelectorAll('.hero .dots i');
     const captions = [
-      ['立冬 · 重科校园', '厚德 · 博学 · 砺志 · 笃行'],
-      ['90 周年校庆', '九秩重科，薪火相传'],
+      ['C市 · 春晖', '明德 · 求真 · 创新 · 致远'],
+      ['20 周年校庆', '廿载C科大，同心同行'],
       ['2026 秋季开学', '新学期 · 新同学 · 新起点']
     ];
     const capEl = document.getElementById('heroCaption');
